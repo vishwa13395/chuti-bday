@@ -391,6 +391,242 @@
             color: white;
         }
 
+        /* Love Letter Envelope */
+        .letter-area {
+            margin-top: 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .letter-hint {
+            font-size: 0.78rem;
+            color: #a85c78;
+            font-weight: 600;
+            animation: hintPulse 1.8s ease-in-out infinite;
+        }
+
+        .envelope-scene {
+            width: min(340px, 92%);
+            height: 245px;
+            position: relative;
+            perspective: 1000px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            filter: drop-shadow(0 18px 26px rgba(214, 51, 132, 0.16));
+        }
+
+        .envelope-scene:focus-visible {
+            outline: 3px solid rgba(255, 117, 140, 0.45);
+            outline-offset: 6px;
+            border-radius: 26px;
+        }
+
+        .envelope {
+            position: absolute;
+            left: 50%;
+            bottom: 8px;
+            width: 100%;
+            height: 175px;
+            transform: translateX(-50%);
+        }
+
+        .envelope-back {
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #ffafbf, #ff7897);
+            box-shadow: inset 0 -10px 24px rgba(180, 45, 87, 0.08);
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .envelope-back::before,
+        .envelope-back::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            z-index: 2;
+        }
+
+        .envelope-back::before {
+            left: 0;
+            border-width: 87px 0 0 170px;
+            border-color: transparent transparent transparent #ff8ca6;
+        }
+
+        .envelope-back::after {
+            right: 0;
+            border-width: 87px 170px 0 0;
+            border-color: transparent #ff9bb0 transparent transparent;
+        }
+
+        .envelope-front {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 104px;
+            background: linear-gradient(180deg, #ff8ca6, #ff6f91);
+            clip-path: polygon(0 18%, 50% 78%, 100% 18%, 100% 100%, 0 100%);
+            border-radius: 0 0 20px 20px;
+            z-index: 5;
+            box-shadow: inset 0 -12px 24px rgba(169, 30, 78, 0.08);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(145deg, #ffafbf, #ff7f9d);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: 50% 0%;
+            transform: rotateX(0deg);
+            transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: 7;
+            backface-visibility: hidden;
+        }
+
+        .envelope-seal {
+            position: absolute;
+            left: 50%;
+            top: 64px;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+            background: radial-gradient(circle at 35% 30%, #ff9bbb, #d63384 78%);
+            color: white;
+            border: 3px solid rgba(255,255,255,0.72);
+            box-shadow: 0 8px 18px rgba(214, 51, 132, 0.28);
+            z-index: 9;
+            transition: opacity 0.25s ease, transform 0.35s ease;
+        }
+
+        .love-letter {
+            position: absolute;
+            left: 50%;
+            bottom: 18px;
+            width: 86%;
+            min-height: 176px;
+            padding: 20px 18px 18px;
+            transform: translate(-50%, 42px) scale(0.96);
+            opacity: 0;
+            border-radius: 18px 18px 12px 12px;
+            background:
+                linear-gradient(rgba(255,255,255,0.94), rgba(255,255,255,0.94)),
+                repeating-linear-gradient(0deg, transparent 0 25px, rgba(255,117,140,0.11) 25px 26px);
+            border: 1px solid rgba(255,117,140,0.24);
+            box-shadow: 0 16px 32px rgba(171, 47, 89, 0.18);
+            z-index: 3;
+            text-align: left;
+            color: #5f4650;
+            line-height: 1.65;
+            font-size: 0.9rem;
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
+        }
+
+        .love-letter::before {
+            content: '💗';
+            position: absolute;
+            right: 15px;
+            top: 11px;
+            font-size: 22px;
+            transform: rotate(8deg);
+        }
+
+        .letter-title {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.08rem;
+            color: #d63384;
+            margin-bottom: 8px;
+            padding-right: 32px;
+        }
+
+        .letter-sign {
+            display: block;
+            margin-top: 10px;
+            color: #d63384;
+            font-family: 'Fredoka', cursive;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .envelope-scene.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .envelope-scene.open .envelope-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.4) rotate(-12deg);
+        }
+
+        .envelope-scene.open .love-letter {
+            transform: translate(-50%, -128px) scale(1);
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .envelope-scene.open {
+            margin-top: 115px;
+        }
+
+        .envelope-scene.open .envelope {
+            animation: envelopeBounce 0.7s 0.15s ease both;
+        }
+
+        .letter-heart {
+            position: absolute;
+            left: 50%;
+            top: 48%;
+            font-size: 19px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 20;
+        }
+
+        .envelope-scene.open .letter-heart:nth-child(1) { animation: letterHeart1 1.6s 0.45s ease-out forwards; }
+        .envelope-scene.open .letter-heart:nth-child(2) { animation: letterHeart2 1.7s 0.58s ease-out forwards; }
+        .envelope-scene.open .letter-heart:nth-child(3) { animation: letterHeart3 1.55s 0.70s ease-out forwards; }
+        .envelope-scene.open .letter-heart:nth-child(4) { animation: letterHeart4 1.7s 0.82s ease-out forwards; }
+        .envelope-scene.open .letter-heart:nth-child(5) { animation: letterHeart5 1.55s 0.94s ease-out forwards; }
+
+        @keyframes envelopeBounce {
+            0% { transform: translateX(-50%) scale(1); }
+            45% { transform: translateX(-50%) scale(1.03) translateY(4px); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { opacity: 0.65; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-2px); }
+        }
+
+        @keyframes letterHeart1 { 0% {opacity:0; transform:translate(-50%,-50%) scale(.5)} 18%{opacity:1} 100%{opacity:0; transform:translate(-120px,-130px) rotate(-20deg) scale(1.35)} }
+        @keyframes letterHeart2 { 0% {opacity:0; transform:translate(-50%,-50%) scale(.5)} 18%{opacity:1} 100%{opacity:0; transform:translate(110px,-145px) rotate(22deg) scale(1.3)} }
+        @keyframes letterHeart3 { 0% {opacity:0; transform:translate(-50%,-50%) scale(.5)} 18%{opacity:1} 100%{opacity:0; transform:translate(-65px,-178px) rotate(-10deg) scale(1.2)} }
+        @keyframes letterHeart4 { 0% {opacity:0; transform:translate(-50%,-50%) scale(.5)} 18%{opacity:1} 100%{opacity:0; transform:translate(68px,-180px) rotate(14deg) scale(1.25)} }
+        @keyframes letterHeart5 { 0% {opacity:0; transform:translate(-50%,-50%) scale(.5)} 18%{opacity:1} 100%{opacity:0; transform:translate(0,-205px) rotate(8deg) scale(1.35)} }
+
+        @media (max-width: 480px) {
+            .envelope-scene { height: 225px; }
+            .envelope { height: 160px; }
+            .love-letter { font-size: 0.82rem; min-height: 168px; }
+            .envelope-scene.open { margin-top: 105px; }
+            .envelope-scene.open .love-letter { transform: translate(-50%, -118px) scale(1); }
+        }
+
         /* Hidden Surprise Box */
         .surprise-box {
             display: none;
@@ -423,311 +659,6 @@
             100% { opacity: 0; transform: translateY(-120px) scale(1.6); }
         }
 
-
-        /* =========================================================
-           ENVELOPE INTRO - THE WHOLE BIRTHDAY CARD COMES OUT OF IT
-           ========================================================= */
-        .envelope-stage {
-            width: 100%;
-            min-height: calc(100vh - 40px);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1400px;
-            z-index: 8;
-        }
-
-        .card-holder {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: min(480px, calc(100vw - 40px));
-            transform: translate(-50%, -38%) translateY(125px) scale(0.64);
-            transform-origin: center center;
-            opacity: 0;
-            z-index: 2;
-            pointer-events: none;
-            filter: drop-shadow(0 12px 25px rgba(178, 75, 112, 0.12));
-            transition:
-                transform 0.95s cubic-bezier(0.18, 0.9, 0.28, 1.15),
-                opacity 0.35s ease,
-                filter 0.7s ease;
-        }
-
-        .card-holder .card {
-            width: 100%;
-            max-width: none;
-        }
-
-        /* First motion: the real card starts sliding out of the envelope */
-        .envelope-stage.open .card-holder {
-            opacity: 1;
-            transform: translate(-50%, -58%) translateY(-45px) scale(0.72);
-            transition-delay: 0.48s;
-        }
-
-        /* Final motion: envelope drops away and original card becomes full size */
-        .envelope-stage.revealed .card-holder {
-            z-index: 20;
-            opacity: 1;
-            transform: translate(-50%, -50%) translateY(0) scale(1);
-            pointer-events: auto;
-            filter: drop-shadow(0 22px 45px rgba(178, 75, 112, 0.18));
-            transition-delay: 0s;
-        }
-
-        .envelope-wrap {
-            width: min(440px, 88vw);
-            height: 285px;
-            position: relative;
-            z-index: 10;
-            perspective: 1300px;
-            cursor: pointer;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            transition: transform 0.75s ease, opacity 0.55s ease, filter 0.35s ease;
-            filter: drop-shadow(0 20px 32px rgba(190, 81, 121, 0.25));
-            animation: envelopeFloat 2.8s ease-in-out infinite;
-        }
-
-        .envelope-wrap:focus-visible {
-            outline: 3px solid rgba(214, 51, 132, 0.35);
-            outline-offset: 8px;
-            border-radius: 24px;
-        }
-
-        .envelope-wrap:hover {
-            filter: drop-shadow(0 25px 38px rgba(190, 81, 121, 0.34));
-        }
-
-        .envelope-back {
-            position: absolute;
-            inset: 0;
-            border-radius: 22px;
-            background:
-                radial-gradient(circle at 50% 15%, rgba(255,255,255,0.85), transparent 33%),
-                linear-gradient(145deg, #ffd4df, #ffb9cb 56%, #ffa5bf);
-            border: 2px solid rgba(255,255,255,0.85);
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.9),
-                inset 0 -18px 35px rgba(214,51,132,0.08);
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .envelope-back::before {
-            content: '';
-            position: absolute;
-            inset: 11px;
-            border: 1px dashed rgba(214, 51, 132, 0.14);
-            border-radius: 16px;
-        }
-
-        /* Top triangular flap */
-        .envelope-flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 72%;
-            clip-path: polygon(0 0, 100% 0, 50% 100%);
-            background: linear-gradient(160deg, #ffe3eb 0%, #ffc1d2 58%, #ffafc7 100%);
-            transform-origin: top center;
-            transform: rotateX(0deg);
-            backface-visibility: hidden;
-            z-index: 6;
-            transition: transform 0.82s cubic-bezier(0.22, 0.78, 0.24, 1), z-index 0s 0.42s;
-            filter: drop-shadow(0 5px 6px rgba(177, 73, 111, 0.10));
-        }
-
-        /* Front pocket - stays in front while the card slides upward */
-        .envelope-pocket {
-            position: absolute;
-            inset: 0;
-            z-index: 5;
-            border-radius: 0 0 22px 22px;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .envelope-pocket::before,
-        .envelope-pocket::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            width: 58%;
-            height: 100%;
-            background: linear-gradient(145deg, #ffc1d2, #ffabc4);
-        }
-
-        .envelope-pocket::before {
-            left: 0;
-            clip-path: polygon(0 15%, 100% 58%, 100% 100%, 0 100%);
-        }
-
-        .envelope-pocket::after {
-            right: 0;
-            clip-path: polygon(0 58%, 100% 15%, 100% 100%, 0 100%);
-        }
-
-        .envelope-bottom-fold {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 62%;
-            z-index: 6;
-            clip-path: polygon(0 100%, 50% 20%, 100% 100%);
-            background: linear-gradient(180deg, #ffbed0, #ffa7c1);
-            pointer-events: none;
-            opacity: 0.98;
-        }
-
-        .envelope-seal {
-            position: absolute;
-            left: 50%;
-            top: 51%;
-            width: 66px;
-            height: 66px;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            background:
-                radial-gradient(circle at 35% 28%, #ff8fb0 0 10%, transparent 11%),
-                linear-gradient(145deg, #ff5f8f, #df3776);
-            display: grid;
-            place-items: center;
-            color: white;
-            font-size: 30px;
-            z-index: 9;
-            box-shadow:
-                0 8px 18px rgba(214, 51, 132, 0.32),
-                inset 0 2px 3px rgba(255,255,255,0.35);
-            border: 3px solid rgba(255,255,255,0.7);
-            transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), opacity 0.3s ease;
-        }
-
-        .envelope-seal::after {
-            content: '';
-            position: absolute;
-            inset: 5px;
-            border: 1px dashed rgba(255,255,255,0.55);
-            border-radius: 50%;
-        }
-
-        .envelope-hint {
-            position: absolute;
-            left: 50%;
-            bottom: -52px;
-            transform: translateX(-50%);
-            color: #bd527a;
-            font-weight: 700;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            background: rgba(255,255,255,0.78);
-            padding: 8px 14px;
-            border-radius: 999px;
-            box-shadow: 0 8px 18px rgba(214,51,132,0.10);
-            animation: hintPulse 1.7s ease-in-out infinite;
-            transition: opacity 0.25s ease, transform 0.25s ease;
-        }
-
-        .envelope-hint::before {
-            content: '💌';
-            margin-right: 7px;
-        }
-
-        .envelope-stage.open .envelope-wrap {
-            animation: none;
-        }
-
-        .envelope-stage.open .envelope-flap {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
-
-        .envelope-stage.open .envelope-seal {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.35) rotate(25deg);
-        }
-
-        .envelope-stage.open .envelope-hint {
-            opacity: 0;
-            transform: translateX(-50%) translateY(8px);
-        }
-
-        .envelope-stage.open .envelope-wrap::after {
-            content: '💖  ✨  💕';
-            position: absolute;
-            left: 50%;
-            top: 25%;
-            transform: translateX(-50%);
-            font-size: 26px;
-            letter-spacing: 18px;
-            z-index: 12;
-            pointer-events: none;
-            animation: envelopeHearts 1.35s 0.35s ease-out forwards;
-            opacity: 0;
-        }
-
-        .envelope-stage.revealed .envelope-wrap {
-            opacity: 0;
-            transform: translateY(160px) scale(0.86);
-            pointer-events: none;
-            filter: blur(2px) drop-shadow(0 10px 20px rgba(190, 81, 121, 0.12));
-        }
-
-        @keyframes envelopeFloat {
-            0%, 100% { transform: translateY(0) rotate(-0.35deg); }
-            50% { transform: translateY(-9px) rotate(0.35deg); }
-        }
-
-        @keyframes hintPulse {
-            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.82; }
-            50% { transform: translateX(-50%) scale(1.045); opacity: 1; }
-        }
-
-        @keyframes envelopeHearts {
-            0% { opacity: 0; transform: translate(-50%, 45px) scale(0.5); }
-            22% { opacity: 1; }
-            100% { opacity: 0; transform: translate(-50%, -150px) scale(1.35); }
-        }
-
-        @media (max-width: 560px) {
-            .envelope-stage {
-                min-height: calc(100vh - 28px);
-            }
-
-            .envelope-wrap {
-                width: min(360px, 90vw);
-                height: 232px;
-            }
-
-            .envelope-seal {
-                width: 56px;
-                height: 56px;
-                font-size: 25px;
-            }
-
-            .envelope-hint {
-                bottom: -46px;
-                font-size: 0.78rem;
-            }
-
-            .card-holder {
-                width: min(480px, calc(100vw - 24px));
-                transform: translate(-50%, -38%) translateY(105px) scale(0.55);
-            }
-
-            .envelope-stage.open .card-holder {
-                transform: translate(-50%, -60%) translateY(-34px) scale(0.60);
-            }
-
-            .envelope-stage.revealed .card-holder {
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
         @media (max-width: 480px) {
             .card { padding: 25px 18px; }
             h1 { font-size: 1.8rem; }
@@ -741,9 +672,7 @@
 
     <div class="particle-container" id="particleContainer"></div>
 
-    <div class="envelope-stage" id="envelopeStage">
-        <div class="card-holder" id="cardHolder">
-            <div class="card">
+    <div class="card">
         <div class="love-meter-box" id="loveMeter">
             <div class="love-meter-title">
                 <span>❤️ Love Level for Chuti</span>
@@ -780,24 +709,33 @@
 
         <div class="btn-group">
             <button class="btn-cute btn-cute-secondary" id="hugBtn" onclick="giveHug(event)">Give a Hug 🫂</button>
-            <button class="btn-cute" onclick="showSurprise(event)">Surprise Wish! 🎁</button>
         </div>
 
-        <div class="surprise-box" id="surpriseBox">
-            🥰 Oyama thama mage jiwithe labunu lassanama thagga! Forever & Always My Princess! 💕✨🌸
-        </div>
+        <div class="letter-area">
+            <div class="letter-hint" id="letterHint">Tap the envelope to open my letter 💌</div>
+            <div class="envelope-scene" id="envelopeScene" role="button" tabindex="0" aria-label="Open love letter" aria-expanded="false">
+                <span class="letter-heart">💖</span>
+                <span class="letter-heart">💕</span>
+                <span class="letter-heart">✨</span>
+                <span class="letter-heart">🌸</span>
+                <span class="letter-heart">💗</span>
+
+                <div class="envelope">
+                    <div class="envelope-back"></div>
+
+                    <div class="love-letter" id="loveLetter">
+                        <div class="letter-title">To My Chuti 💖</div>
+                        🥰 Oyama thama mage jiwithe labunu lassanama thagga!
+                        Hamadama me widiyatama hina wela, sathutin mage lagin inna.
+                        Oya mage lokema. Forever &amp; Always My Princess! 💕✨🌸
+                        <span class="letter-sign">Godak Adarei 💗</span>
+                    </div>
+
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-front"></div>
+                    <div class="envelope-seal">❤</div>
+                </div>
             </div>
-        </div>
-
-        <div class="envelope-wrap" id="birthdayEnvelope" role="button" tabindex="0"
-             aria-label="Open birthday card" onclick="openBirthdayCard(event)"
-             onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); openBirthdayCard(event); }">
-            <div class="envelope-back"></div>
-            <div class="envelope-flap"></div>
-            <div class="envelope-pocket"></div>
-            <div class="envelope-bottom-fold"></div>
-            <div class="envelope-seal">💗</div>
-            <div class="envelope-hint">Tap to open Chuti's card</div>
         </div>
     </div>
 
@@ -809,41 +747,6 @@
         // Preload the Hug GIF so there is no delay when the user clicks the button
         const preloadedHugGif = new Image();
         preloadedHugGif.src = hugGifSrc;
-
-        let birthdayCardOpened = false;
-
-        function openBirthdayCard(e) {
-            if (birthdayCardOpened) return;
-            birthdayCardOpened = true;
-
-            const stage = document.getElementById('envelopeStage');
-            stage.classList.add('open');
-
-            // Small sparkle burst when the seal breaks
-            const rect = document.getElementById('birthdayEnvelope').getBoundingClientRect();
-            const fakeEvent = {
-                clientX: rect.left + rect.width / 2,
-                clientY: rect.top + rect.height / 2
-            };
-
-            setTimeout(() => {
-                spawnHearts(fakeEvent);
-            }, 350);
-
-            // After the card has visibly slid out, bring the original card to full size
-            setTimeout(() => {
-                stage.classList.add('revealed');
-
-                if (typeof confetti === 'function') {
-                    confetti({
-                        particleCount: 65,
-                        spread: 75,
-                        startVelocity: 28,
-                        origin: { y: 0.62 }
-                    });
-                }
-            }, 1550);
-        }
 
         function createParticles() {
             const container = document.getElementById('particleContainer');
@@ -1011,20 +914,36 @@
             }, 3500);
         }
 
-        function showSurprise(e) {
-            playBirthdayMelody();
-            spawnHearts(e);
+        function toggleLetter() {
+            const scene = document.getElementById('envelopeScene');
+            const hint = document.getElementById('letterHint');
+            const isOpen = scene.classList.toggle('open');
+            scene.setAttribute('aria-expanded', String(isOpen));
 
-            const surpriseBox = document.getElementById('surpriseBox');
-            surpriseBox.style.display = 'block';
+            if (isOpen) {
+                hint.textContent = 'A little letter just for you 💖';
+                playBirthdayMelody();
 
-            confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
+                const rect = scene.getBoundingClientRect();
+                spawnHearts({
+                    clientX: rect.left + rect.width / 2,
+                    clientY: rect.top + rect.height / 2
+                });
 
-            setTimeout(() => {
-                confetti({ particleCount: 50, angle: 60, spread: 60, origin: { x: 0 } });
-                confetti({ particleCount: 50, angle: 120, spread: 60, origin: { x: 1 } });
-            }, 300);
+                confetti({ particleCount: 70, spread: 70, origin: { y: 0.65 } });
+            } else {
+                hint.textContent = 'Tap the envelope to open my letter 💌';
+            }
         }
+
+        const envelopeScene = document.getElementById('envelopeScene');
+        envelopeScene.addEventListener('click', toggleLetter);
+        envelopeScene.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleLetter();
+            }
+        });
 
         createParticles();
         setTimeout(animateLoveMeter, 450);
