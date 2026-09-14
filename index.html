@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="si">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Chuti! 💖✨</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --primary-pink: #ff758c;
+            --secondary-pink: #ff7eb3;
+            --bg-grad-1: #ffd1dc;
+            --bg-grad-2: #ffe6e8;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-color: #4a4a4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Floating Background Particles */
+        .particle-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            bottom: -50px;
+            font-size: 20px;
+            opacity: 0.7;
+            animation: floatUp 7s infinite ease-in-out;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-120vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* Main Cute Card Container */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 35px;
+            padding: 35px 25px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(255, 117, 140, 0.25);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            z-index: 10;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(255, 117, 140, 0.35);
+        }
+
+        /* Love Meter */
+        .love-meter-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border: 1.5px dashed var(--primary-pink);
+            font-size: 0.85rem;
+            color: #d63384;
+            font-weight: 600;
+        }
+
+        .love-bar {
+            height: 12px;
+            background: #ffe0e6;
+            border-radius: 10px;
+            margin-top: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .love-fill {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff758c, #ff7eb3);
+            border-radius: 10px;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.2); }
+        }
+
+        /* Header Title */
+        h1 {
+            font-family: 'Fredoka', cursive;
+            color: #d63384;
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+            animation: floatTitle 3s infinite ease-in-out;
+        }
+
+        @keyframes floatTitle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #727272;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* Duduu & Bubu Image Container */
+        .character-box {
+            width: 100%;
+            height: 200px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .character-img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 15px rgba(255, 117, 140, 0.2));
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 20px;
+        }
+
+        /* Hug Animation Effect Class */
+        .hug-anim {
+            animation: hugPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes hugPop {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Wish Text Box */
+        .wish-text {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 18px;
+            border-radius: 22px;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            border: 2px dashed #ffa4b6;
+        }
+
+        .highlight {
+            color: #d63384;
+            font-weight: 700;
+        }
+
+        /* Action Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cute {
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(255, 117, 140, 0.4);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .btn-cute:hover {
+            transform: scale(1.06) translateY(-2px);
+            box-shadow: 0 10px 22px rgba(255, 117, 140, 0.5);
+        }
+
+        .btn-cute-secondary {
+            background: linear-gradient(45deg, #a8e6cf, #1dd1a1);
+            color: white;
+        }
+
+        /* Hidden Surprise Box */
+        .surprise-box {
+            display: none;
+            margin-top: 18px;
+            padding: 15px;
+            background: #fff0f5;
+            border-radius: 20px;
+            color: #d63384;
+            font-weight: 600;
+            border: 2px solid #ff758c;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.6); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Flying Hearts */
+        .floating-heart {
+            position: absolute;
+            font-size: 26px;
+            pointer-events: none;
+            animation: heartFloat 1.5s ease-out forwards;
+            z-index: 100;
+        }
+
+        @keyframes heartFloat {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-120px) scale(1.6); }
+        }
+
+        @media (max-width: 480px) {
+            .card { padding: 25px 18px; }
+            h1 { font-size: 1.8rem; }
+            .wish-text { font-size: 0.88rem; }
+            .btn-cute { width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="particle-container" id="particleContainer"></div>
+
+    <div class="card">
+        <div class="love-meter-box">
+            ❤️ Love Level for Chuti: <strong>1000% ∞</strong>
+            <div class="love-bar"><div class="love-fill"></div></div>
+        </div>
+
+        <h1>Happy Birthday Chuti! 🎂</h1>
+        <div class="subtitle">Mage adara chuti kettiyata ❤️</div>
+
+        <!-- Duduu & Bubu Image Box -->
+        <div class="character-box">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST88TV0T3EJpiJsKDBMf5oHIrDv7rXEmxuKZpeisRVrw&s=10"
+                alt="Duduu and Bubu" class="character-img" id="mainImg">
+        </div>
+
+        <!-- Wish Text -->
+        <div class="wish-text">
+            Mage diviya lassana karapu mage <span class="highlight">Chuti</span> rattharanata godak subha upandinayak wewa! 🎈 
+            Oya thama mage lokema. Hamadama me widiyatama hina wela, sathutin mage lagin inna oni. 
+            <br><br>
+            <span class="highlight">Godak Adarei Mage Chutingita! 💖✨</span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-group">
+            <button class="btn-cute btn-cute-secondary" onclick="giveHug(event)">Give a Hug 🫂</button>
+            <button class="btn-cute" onclick="showSurprise(event)">Surprise Wish! 🎁</button>
+        </div>
+
+        <!-- Surprise Message Box -->
+        <div class="surprise-box" id="surpriseBox">
+            🥰 Oyama thama mage jiwithe labunu lassanama thagga! Forever & Always My Princess! 💕✨🌸
+        </div>
+    </div>
+
+    <script>
+        const originalImgSrc = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST88TV0T3EJpiJsKDBMf5oHIrDv7rXEmxuKZpeisRVrw&s=10";
+        // Bubu running and hugging Dudu animated GIF
+        const hugGifSrc = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdW8yc2s3NDBzaTByczl5YnVmcGR2cGplMHA3eTlraWtlMWFvZDF0YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LpAxaS1OIsK9YAnL1F/giphy.gif";
+
+        function createParticles() {
+            const container = document.getElementById('particleContainer');
+            const items = ['💖', '✨', '🌸', '🎈', '💕', '☁️', '🎀'];
+
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                p.innerText = items[Math.floor(Math.random() * items.length)];
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = (Math.random() * 4 + 5) + 's';
+                p.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(p);
+            }
+        }
+
+        // Web Audio Tune
+        function playBirthdayMelody() {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const notes = [
+                { f: 261.63, d: 0.25 }, { f: 261.63, d: 0.25 }, { f: 293.66, d: 0.5 }, { f: 261.63, d: 0.5 },
+                { f: 349.23, d: 0.5 }, { f: 329.63, d: 0.9 },
+                { f: 261.63, d: 0.25 }, { f: 261.63, d: 0.25 }, { f: 293.66, d: 0.5 }, { f: 261.63, d: 0.5 },
+                { f: 392.00, d: 0.5 }, { f: 349.23, d: 0.9 }
+            ];
+
+            let currentTime = audioCtx.currentTime;
+            notes.forEach(note => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(note.f, currentTime);
+                gain.gain.setValueAtTime(0.12, currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, currentTime + note.d);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(currentTime);
+                osc.stop(currentTime + note.d);
+                currentTime += note.d + 0.05;
+            });
+        }
+
+        function playHugSound() {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const notes = [440, 554.37, 659.25, 880];
+            notes.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime + i * 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.08 + 0.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(audioCtx.currentTime + i * 0.08);
+                osc.stop(audioCtx.currentTime + i * 0.08 + 0.2);
+            });
+        }
+
+        function spawnHearts(e) {
+            const hearts = ['💖', '💕', '🌸', '✨', '🥰', '🧸', '🫂'];
+            for (let i = 0; i < 12; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = (e.clientX + (Math.random() * 100 - 50)) + 'px';
+                heart.style.top = (e.clientY + (Math.random() * 100 - 50)) + 'px';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 1500);
+            }
+        }
+
+        // Give a Hug Function (Swaps Image to Animated Hug GIF)
+        function giveHug(e) {
+            playHugSound();
+            spawnHearts(e);
+
+            const img = document.getElementById('mainImg');
+            
+            // Switch to Hug GIF
+            img.src = hugGifSrc;
+            img.classList.add('hug-anim');
+
+            // Reset image back to original after 3.5 seconds
+            setTimeout(() => {
+                img.src = originalImgSrc;
+                img.classList.remove('hug-anim');
+            }, 3500);
+        }
+
+        function showSurprise(e) {
+            playBirthdayMelody();
+            spawnHearts(e);
+
+            const surpriseBox = document.getElementById('surpriseBox');
+            surpriseBox.style.display = 'block';
+
+            confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
+
+            setTimeout(() => {
+                confetti({ particleCount: 50, angle: 60, spread: 60, origin: { x: 0 } });
+                confetti({ particleCount: 50, angle: 120, spread: 60, origin: { x: 1 } });
+            }, 300);
+        }
+
+        createParticles();
+    </script>
+</body>
+
+</html>
